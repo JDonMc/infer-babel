@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load user_referencing %}
+{% load vote_screen %}
+{% load humanize %}
+{% load static %}
+
+{% block authenticatedposts %}
+<div class=about>
+	<h2>About</h2>
+	<div class=top>
+		Mixed Micronutrients supports only peer reviewed science.
+	</div>
+	<div class=middle>
+		Automaticly updating articles are live on track.
+	</div>
+	<div class=bottom>
+		Purified bioactive supplements.
+	</div>
+</div>
+{% endblock %}
+
+{% block unauthenticated_posts %}
+<div class=about>
+	<h2>About</h2>
+	<div class=top>
+		Mixed Micronutrients supports only peer reviewed science.
+	</div>
+	<div class=middle>
+		Automaticly updating articles are live on track.
+	</div>
+	<div class=bottom>
+		Purified bioactive supplements.
+	</div>
+</div>
+{% endblock %}

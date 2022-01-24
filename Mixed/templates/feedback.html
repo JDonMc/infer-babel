@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load user_referencing %}
+{% load vote_screen %}
+{% load humanize %}
+{% load static %}
+
+{% block authenticatedposts %}
+<div class=spacer style="height: 50px;">
+	</div>
+<form class=contact action="{% url 'create_feedback' %}" method="post">
+	{% csrf_token %}
+	{{ contact_form }}
+	<div class="form-actions">
+		<button type="submit">Send</button>
+	</div>
+</form>
+{% endblock %}
+
+{% block unauthenticated_posts %}
+<div class=spacer style="height: 50px;">
+	</div>
+<form class=contact action="{% url 'create_feedback' %}" method="post">
+	{% csrf_token %}
+	{{ contact_form }}
+	<div class="form-actions">
+		<button type="submit">Send</button>
+	</div>
+</form>
+{% endblock %}

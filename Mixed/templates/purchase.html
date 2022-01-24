@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load user_referencing %}
+{% load humanize %}
+
+{% block authenticatedposts %}
+<div class=paypal>
+	Pay with PayPal
+	{{ paypalform.render }}
+</div>
+{% endblock %}
+
+{% block unauthenticated_posts %}
+
+
+{% endblock %}

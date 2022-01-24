@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load user_referencing %}
+{% load vote_screen %}
+{% load humanize %}
+{% load static %}
+{% load markdownify %}
+
+
+{% block authenticatedposts %}
+<div class=index>
+	<div class=displaybanner>
+		<h3>
+			Product:
+		</h3>
+	</div>
+	<div class=products>
+		<div class=title>
+			<h3><a href="{% url 'products' product.id 0 %}">{{ product.title }}</a></h3>
+		</div>
+		<div class=description>
+			{{ product.description|markdownify|linebreaks }}
+		</div>
+		<div class=img>
+			<img src="{{ product.img }}">
+		</div>
+		<div class=price>
+			${{ product.price }}
+		</div>
+		<div class=stock>
+			{% if product.stock %}
+			Stock: In stock
+			{% else %}
+			Stock: Out of stock
+			{% endif %}
+		</div>
+		{% if request.user.username in product.title %}
+		{% else %}
+		<div class=addto>
+			<h3>Add to cart:</h3>
+			<form action="{% url 'products' product.id seller %}" method=post>
+				{% csrf_token %}
+				{{ qty_form.as_p }}
+				<button type=submit>24 Hour Stock Reserve</button>
+			</form>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+
+{% block unauthenticated_posts %}
+<div class=index>
+	<div class=displaybanner>
+		<h3>
+			Product:
+		</h3>
+	</div>
+	<div class=products style='margin-left: 1em;'>
+		<div class=title>
+			<h3><a href="{% url 'products' product.id 0 %}">{{ product.title }}</a></h3>
+		</div>
+		<div class=description>
+			{{ product.description|markdownify|linebreaks }}
+		</div>
+		<div class=img>
+			<img src="{{ product.img }}">
+		</div>
+		<div class=price>
+			${{ product.price }}
+		</div>
+		<div class=stock>
+			{% if product.stock %}
+			Stock: {{ product.stock }}
+			{% else %}
+			Stock: Out of stock
+			{% endif %}
+		</div>
+		
+		<div class=addto>
+			<h3>Add to cart:</h3>
+			Please Login
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+	function openComment(starter) {
+			var element = document.getElementById(starter + "form");
+			if (element.style.display === "inline-block") {
+				element.style.display = "none";
+			} else {
+				element.style.display = "inline-block";
+			}
+		}
+
+	function openCommentThread(starter, com) {
+		var element = document.getElementById(starter).getElementById(com);
+		if (element.style.display === "inline-block") {
+			element.style.display = "none";
+		} else {
+			element.style.display = "inline-block";
+		}
+	}
+
+	function comCollapse(node) {
+		var element = document.getElementById(node)
+		if (element.style.display === "inline-block") {
+			element.style.display = "none";
+		} else {
+			element.style.display = "inline-block";
+		}
+	}
+</script>
+{% endblock %}

@@ -1,0 +1,48 @@
+<!-- # Copyright Aden Handasyde 2019 -->
+
+{% extends 'base.html' %}
+
+{% load user_referencing %}
+{% load vote_screen %}
+{% load humanize %}
+{% load static %}
+{% load markdownify %}
+
+{% block authenticatedposts %}
+
+<div class=index>
+	<div class=products style="margin-left: 1em;">
+		{% for product in loggedinanon.cart.all %}
+			<div class=title>
+				<h3><a href="{% url 'products' product.id 0 %}">{{ product.title }}</a></h3>
+			</div>
+			<div class=delete style="position: absolute; right: 2em;">
+				<h3><a href="{% url 'delete_product' product.id %}">X</a></h3>
+			</div>
+			<div class=description>
+				{{ product.description|truncatechars:144|markdownify|linebreaks }}
+			</div>
+			<div class=img>
+				<img src="{{ product.img }}">
+			</div>
+			<div class=price>
+				${{ product.price }}
+			</div>
+			<div class=stock>
+				Stock: {{ product.stock }}
+			</div>
+		{% endfor %}
+	</div>
+</div>
+<div class=paypal>
+	{% if failure %}
+		Failed
+	{% endif %}
+	Pay with PayPal + 25 postage
+	{{ paypalform.render }}
+</div>
+{% endblock %}
+
+{% block unauthenticated_posts %}
+
+{% endblock %}
